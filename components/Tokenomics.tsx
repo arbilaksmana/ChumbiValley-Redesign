@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 const tokenDistribution = [
@@ -20,6 +20,28 @@ const CustomTooltip = ({ active, payload }: any) => {
     );
   }
   return null;
+};
+
+// Parent variant to control staggering
+const listContainerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const listItemVariants: Variants = {
+  hidden: { opacity: 0, x: -20, filter: "blur(5px)" },
+  visible: {
+    opacity: 1,
+    x: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
 };
 
 const Tokenomics: React.FC = () => {
@@ -50,7 +72,7 @@ const Tokenomics: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto mb-20">
            {/* CHMB Token */}
            <motion.div 
-             initial={{ opacity: 0, y: 50 }} 
+             initial={{ opacity: 0, y: 60 }} 
              whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
              transition={{ duration: 0.8, ease: "easeOut" }}
@@ -70,26 +92,29 @@ const Tokenomics: React.FC = () => {
                <h3 className="text-4xl font-cinzel font-bold text-white mb-2 group-hover:text-chumbi-gold transition-colors">$CHMB</h3>
                <p className="text-chumbi-gold font-bold text-sm tracking-[0.2em] mb-6 opacity-80">GOVERNANCE TOKEN</p>
                
-               <div className="w-full space-y-3">
+               <motion.div 
+                 variants={listContainerVariants}
+                 initial="hidden"
+                 whileInView="visible"
+                 viewport={{ once: true }}
+                 className="w-full space-y-3"
+               >
                  {['Deep Ecosystem Integration', 'Staking Rewards', 'Voting Rights'].map((item, i) => (
                    <motion.div 
                      key={i} 
-                     initial={{ opacity: 0, x: -20 }}
-                     whileInView={{ opacity: 1, x: 0 }}
-                     viewport={{ once: true }}
-                     transition={{ delay: 0.4 + (i * 0.15), duration: 0.5 }}
+                     variants={listItemVariants}
                      className="bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-gray-400 font-quicksand text-sm group-hover:border-chumbi-gold/30 transition-colors"
                    >
                      {item}
                    </motion.div>
                  ))}
-               </div>
+               </motion.div>
              </div>
            </motion.div>
 
            {/* LSTS Token */}
            <motion.div 
-             initial={{ opacity: 0, y: 50 }} 
+             initial={{ opacity: 0, y: 60 }} 
              whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
@@ -109,20 +134,23 @@ const Tokenomics: React.FC = () => {
                <h3 className="text-4xl font-cinzel font-bold text-white mb-2 group-hover:text-chumbi-teal transition-colors">$LSTS</h3>
                <p className="text-chumbi-teal font-bold text-sm tracking-[0.2em] mb-6 opacity-80">LUCKY STARS</p>
                
-               <div className="w-full space-y-3">
+               <motion.div 
+                 variants={listContainerVariants}
+                 initial="hidden"
+                 whileInView="visible"
+                 viewport={{ once: true }}
+                 className="w-full space-y-3"
+               >
                  {['In-game Currency', 'Play-to-Earn Rewards', 'Breeding & Leveling'].map((item, i) => (
                    <motion.div 
                      key={i} 
-                     initial={{ opacity: 0, x: 20 }}
-                     whileInView={{ opacity: 1, x: 0 }}
-                     viewport={{ once: true }}
-                     transition={{ delay: 0.6 + (i * 0.15), duration: 0.5 }}
+                     variants={listItemVariants}
                      className="bg-white/5 border border-white/5 rounded-xl py-3 px-4 text-gray-400 font-quicksand text-sm group-hover:border-chumbi-teal/30 transition-colors"
                    >
                      {item}
                    </motion.div>
                  ))}
-               </div>
+               </motion.div>
              </div>
            </motion.div>
         </div>

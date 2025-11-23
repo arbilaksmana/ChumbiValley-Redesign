@@ -4,32 +4,40 @@ import { Sword, Sprout, Home, Search, Map } from 'lucide-react';
 
 const features = [
   {
-    icon: <Sprout size={28} />,
+    icon: <Sprout size={32} className="text-white" />,
     title: "Breed & Collect",
     desc: "Breed unique Chumbi with rare body parts and abilities.",
-    color: "from-emerald-400 to-green-600",
-    shadow: "shadow-[0_0_30px_rgba(52,211,153,0.3)]"
+    color: "from-emerald-400 to-emerald-600",
+    shadow: "shadow-emerald-500/30",
+    border: "group-hover:border-emerald-500/50",
+    bgIcon: "bg-emerald-500"
   },
   {
-    icon: <Sword size={28} />,
+    icon: <Sword size={32} className="text-white" />,
     title: "Battle",
     desc: "Train your Chumbi and battle against Cursed Chumbi and other players.",
-    color: "from-rose-400 to-red-600",
-    shadow: "shadow-[0_0_30px_rgba(244,63,94,0.3)]"
+    color: "from-rose-400 to-rose-600",
+    shadow: "shadow-rose-500/30",
+    border: "group-hover:border-rose-500/50",
+    bgIcon: "bg-rose-500"
   },
   {
-    icon: <Home size={28} />,
+    icon: <Home size={32} className="text-white" />,
     title: "Farming",
     desc: "Build your home, farm crops, and craft valuable NFT items.",
-    color: "from-amber-400 to-orange-600",
-    shadow: "shadow-[0_0_30px_rgba(251,191,36,0.3)]"
+    color: "from-amber-400 to-amber-600",
+    shadow: "shadow-amber-500/30",
+    border: "group-hover:border-amber-500/50",
+    bgIcon: "bg-amber-500"
   },
   {
-    icon: <Search size={28} />,
+    icon: <Search size={32} className="text-white" />,
     title: "Explore",
     desc: "Send your Chumbi on expeditions to find rare NFT artifacts.",
-    color: "from-sky-400 to-blue-600",
-    shadow: "shadow-[0_0_30px_rgba(56,189,248,0.3)]"
+    color: "from-sky-400 to-sky-600",
+    shadow: "shadow-sky-500/30",
+    border: "group-hover:border-sky-500/50",
+    bgIcon: "bg-sky-500"
   }
 ];
 
@@ -38,17 +46,17 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.15
     }
   }
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 40 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { type: "spring", stiffness: 40, damping: 10 }
+    transition: { type: "spring", stiffness: 50, damping: 15 }
   }
 };
 
@@ -59,32 +67,35 @@ const Gameplay: React.FC = () => {
     offset: ["start end", "end start"]
   });
 
-  // Parallax for map background
-  const yMap = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  const yMap = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   return (
     <section id="gameplay" className="py-32 bg-[#080c16] relative overflow-hidden">
-      {/* Subtle textured background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#050b14] to-[#0a101d] pointer-events-none" />
+      {/* Background Ambience */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a2c4e] via-[#080c16] to-[#050b14] pointer-events-none opacity-60" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       
       <div className="container mx-auto px-6 relative z-10">
         
-        <div className="text-center mb-20">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-cinzel font-bold text-white mb-2 tracking-wide"
+        <div className="text-center mb-24 relative">
+          <motion.div
+             initial={{ opacity: 0, scale: 0.9 }}
+             whileInView={{ opacity: 1, scale: 1 }}
+             viewport={{ once: true }}
+             className="inline-block relative"
           >
-            GAMEPLAY <span className="text-chumbi-purple">FEATURES</span>
-          </motion.h2>
-          <motion.div 
-            initial={{ width: 0 }}
-            whileInView={{ width: 80 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="h-1 bg-chumbi-purple mx-auto rounded-full shadow-[0_0_10px_#8b5cf6]" 
-          />
+             <h2 className="text-5xl md:text-7xl font-cinzel font-bold text-white mb-2 tracking-wide relative z-10">
+               GAMEPLAY <span className="text-transparent bg-clip-text bg-gradient-to-br from-chumbi-purple to-purple-400">FEATURES</span>
+             </h2>
+             {/* Decorative Underline specific to FEATURES */}
+             <motion.div 
+               initial={{ width: 0 }}
+               whileInView={{ width: "40%" }}
+               viewport={{ once: true }}
+               transition={{ delay: 0.4, duration: 0.8 }}
+               className="h-1.5 bg-gradient-to-r from-chumbi-purple to-transparent absolute -bottom-2 right-0 rounded-full" 
+             />
+          </motion.div>
         </div>
 
         <motion.div 
@@ -98,24 +109,37 @@ const Gameplay: React.FC = () => {
             <motion.div
               key={idx}
               variants={cardVariants}
-              whileHover={{ y: -8 }}
-              className="bg-[#131b2c] border border-white/5 p-8 rounded-[2rem] relative overflow-hidden group hover:border-white/10 transition-all duration-300 flex flex-col items-start text-left h-full shadow-lg hover:shadow-2xl"
+              whileHover={{ y: -12, scale: 1.02 }}
+              className={`
+                relative p-8 rounded-[2.5rem] flex flex-col items-start text-left group
+                bg-gradient-to-b from-gray-800/40 to-gray-900/60 backdrop-blur-md
+                border border-white/5 ${feature.border} transition-all duration-500
+                shadow-xl hover:shadow-2xl overflow-hidden
+              `}
             >
-              {/* Hover Gradient Overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+               {/* Inner Glow Effect */}
+               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+               <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 blur-[60px] transition-all duration-500`} />
               
-              {/* Icon */}
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mb-6 ${feature.shadow} group-hover:scale-105 transition-transform duration-300 relative z-10`}>
+              {/* Icon Container */}
+              <div className={`
+                w-18 h-18 p-5 rounded-2xl mb-8 relative z-10
+                ${feature.bgIcon} ${feature.shadow} shadow-lg
+                group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 ease-out
+              `}>
                 {feature.icon}
               </div>
               
-              <h3 className="text-lg font-cinzel font-bold text-white mb-3 uppercase tracking-wider relative z-10">
+              <h3 className="text-xl font-cinzel font-bold text-white mb-4 uppercase tracking-wider relative z-10">
                 {feature.title}
               </h3>
               
-              <p className="text-slate-400 font-quicksand text-sm leading-relaxed relative z-10">
+              <p className="text-gray-400 font-quicksand text-sm leading-7 relative z-10 font-medium group-hover:text-gray-300 transition-colors">
                 {feature.desc}
               </p>
+
+              {/* Bottom Line Accent */}
+              <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
             </motion.div>
           ))}
         </motion.div>
@@ -123,39 +147,52 @@ const Gameplay: React.FC = () => {
         {/* Map Preview */}
         <motion.div 
            ref={mapRef}
-           initial={{ opacity: 0, y: 40 }}
-           whileInView={{ opacity: 1, y: 0 }}
+           initial={{ opacity: 0, scale: 0.95, y: 50 }}
+           whileInView={{ opacity: 1, scale: 1, y: 0 }}
            viewport={{ once: true }}
-           transition={{ duration: 0.8 }}
-           className="mt-24 relative rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl h-[400px] md:h-[500px] group isolate transform-gpu bg-black"
+           transition={{ duration: 1, ease: "easeOut" }}
+           className="mt-32 relative rounded-[3rem] overflow-hidden border border-chumbi-gold/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] h-[450px] md:h-[600px] group isolate"
         >
-           {/* Background Image with parallax */}
+           {/* Parallax Map Image */}
            <div className="absolute inset-0 overflow-hidden">
-             <motion.div style={{ y: yMap, scale: 1.25 }} className="w-full h-[120%]">
+             <motion.div style={{ y: yMap, scale: 1.15 }} className="w-full h-[120%]">
                <img 
                  src="https://images.unsplash.com/photo-1500964757637-c85e8a162699?q=80&w=2578&auto=format&fit=crop" 
                  alt="Chumbi Valley Map" 
-                 className="w-full h-full object-cover"
+                 className="w-full h-full object-cover filter brightness-75 contrast-125 saturate-110"
                />
              </motion.div>
            </div>
 
-           {/* Overlay Gradients */}
-           <div className="absolute inset-0 bg-gradient-to-t from-chumbi-dark via-transparent to-transparent opacity-80 pointer-events-none" />
-           <div className="absolute inset-0 bg-gradient-to-r from-chumbi-dark/80 via-transparent to-transparent opacity-60 pointer-events-none" />
+           {/* Premium Gradient Overlays */}
+           <div className="absolute inset-0 bg-gradient-to-t from-[#080c16] via-[#080c16]/50 to-transparent opacity-90" />
+           <div className="absolute inset-0 bg-gradient-to-r from-amber-600/10 via-purple-600/10 to-blue-600/10 mix-blend-soft-light" />
            
-           <div className="absolute bottom-0 left-0 w-full p-8 md:p-14 relative z-10">
-             <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-chumbi-gold/20 flex items-center justify-center backdrop-blur-md border border-chumbi-gold/30">
-                  <Map className="text-chumbi-gold" size={20} />
-                </div>
-                <span className="text-chumbi-gold uppercase tracking-[0.2em] font-bold text-xs">Exploration</span>
+           <div className="absolute bottom-0 left-0 w-full p-10 md:p-16 relative z-10 flex flex-col md:flex-row items-end justify-between gap-8">
+             <div className="max-w-2xl">
+                <motion.div 
+                  initial={{ x: -20, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="flex items-center gap-3 mb-4"
+                >
+                    <div className="w-10 h-10 rounded-full bg-chumbi-gold flex items-center justify-center shadow-[0_0_15px_#fbbf24]">
+                      <Map className="text-chumbi-dark fill-current" size={20} />
+                    </div>
+                    <span className="text-chumbi-gold uppercase tracking-[0.3em] font-bold text-xs font-quicksand">Exploration</span>
+                </motion.div>
+                 
+                 <h3 className="text-4xl md:text-6xl font-cinzel font-black text-white mb-6 leading-tight drop-shadow-xl">
+                    A World of <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">Infinite Mystery</span>
+                 </h3>
+                 <p className="text-gray-300 text-lg md:text-xl font-quicksand leading-relaxed max-w-xl">
+                   Traverse the diverse biomes of the valley. From the whispering ancient forests to the crystal canyons, adventure awaits at every turn.
+                 </p>
              </div>
              
-             <h3 className="text-3xl md:text-5xl font-cinzel font-bold text-white mb-4">Diverse Biomes await</h3>
-             <p className="text-gray-300 max-w-xl font-quicksand text-lg leading-relaxed drop-shadow-md">
-               Discover forests, deserts, caves, and ancient ruins. Each region contains unique Chumbi and rare resources waiting to be claimed.
-             </p>
+             <button className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-cinzel font-bold hover:bg-white hover:text-chumbi-dark transition-all duration-300 shadow-lg hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]">
+                View World Map
+             </button>
            </div>
         </motion.div>
       </div>
